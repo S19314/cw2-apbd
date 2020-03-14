@@ -15,7 +15,7 @@ public class Student
 					email,
 					mothersName,
 					fathersName;
-	[XmlAttribute(ska = "indexNumber")]
+	// [XmlAttribute(ska = "indexNumber")]
 	//studies 
 	private Studies studies;
 	
@@ -37,73 +37,99 @@ public class Student
 	--_ */
 	}
 	
-	public string GetSka()
+
+
+
+	public string Ska
 	{
-		return ska;
+		get{ return ska; }
+
+		set{
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+			this.ska = value;
+		}
 	}
 
-	public void SetSka(string ska) {
-		this.ska = ska;
+
+	public string Fname
+	{
+		get { return fname; }
+
+		set
+		{
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+
+			this.fname = value;
+		}
+	}
+	public string Lname
+	{
+		get { return lname; }
+		
+		set{
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+
+			this.lname = value;
+		}
 	}
 
-	public string getFname(){
-		return fname;
-	}
-	public void setFname(string fname){
-		this.fname = fname;
-	}
+
+	public string Birthdate
+	{
+		get{ return birthdate; }
 	
-	public string getLname()
-	{
-		return lname;
-	}
-	public void setLname(string lname)
-	{
-		this.lname = lname;
-	}
-
-	public string getBirthdate()
-	{
-		return birthdate;
-	}
-	public void setBirthdate(string birthdate)
-	{
-		this.birthdate = birthdate;
+		set {
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+			this.birthdate = value;
+		}
 	}
 
 
-	public string getEmail()
+	public string Email
 	{
-		return lname;
-	}
-	public void setEmail(string email)
-	{
-		this.email = email;
-	}
-	public string getMothersName()
-	{
-		return mothersName;
-	}
-	public void setMothersName(string mothersName)
-	{
-		this.mothersName = mothersName;
-	}
+		get{ return lname; }
 
-	public string getFathersName()
-	{
-		return fathersName;
-	}
-	public void setFathersName(string fathersName)
-	{
-		this.fathersName  = fathersName;
-	}
+		set{
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
 
-	public Studies GetStudies() {
-		return studies;
+			this.email = value;
+		}
 	}
+	public string MothersName
+	{
+		get
+		{
+			return mothersName;
+		}
+	
+		set
+		{
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+			this.mothersName = value;
+		}
+}
+	public string FathersName
+		{	get{
+			return fathersName;
+		}
+		set {
+			if (value == null || value == "")
+				Console.WriteLine("Excp");
+			fathersName  = value;
+		}
+	}
+	public Studies Studies {
+		get { return studies; }
 
-	public void SetStudies(Studies studies) {
-		this.studies = studies; 
+		set{
+			studies = value;
+		} 
 	}
 	
 

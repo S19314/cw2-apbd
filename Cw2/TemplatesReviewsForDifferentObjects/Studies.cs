@@ -9,27 +9,37 @@ namespace Cw2.TemplatesReviewsForDifferentObjects
     {
         private string name,
                        mode;
-        public Studies(string name, string mode){
-            this.name = name;
-            this.mode = mode;
+        public Studies() { //_ string name, string mode){
+            //_ this.name = name;
+            //_ this.mode = mode;
         }
 
-        public void setName(string name) {
-            this.name = name; 
+        public string Name {
+            set {
+                if (value == null || value == "")
+                    Console.WriteLine("Excp");
+                name = value;
+            }
+
+             get
+            {
+                return name;
+            }
         }
-        public string getName()
+        public string Mode
         {
-            return name;
+
+            set
+            {
+                if (value == null || value == "")
+                    Console.WriteLine("Excp");
+                mode = value;
+            }
+            get
+            {
+                return mode;
+            }
         }
 
-        public string getMode()
-        {
-            return mode;
-        }
-
-        public void setMode(string mode)
-        {
-            this.mode = mode;
-        }
     }
 }

@@ -51,8 +51,25 @@ namespace Cw2
                     // albo dwa parametry typu string?
                     // Albo nie ma różnicy w tym wypadku? 
                     Console.WriteLine("ska " + studentParametrs[4] + ", fname " + studentParametrs[0]);
-                    var st = new Student();
-                    st.SetSka(studentParametrs[4]);
+                    var studies = new Studies { 
+                        Name = studentParametrs[2],
+                        Mode = studentParametrs[3]
+                    };
+                   
+                    var st = new Student
+                    {
+                        Ska = studentParametrs[4],
+                        Fname = studentParametrs[0],
+                        Lname = studentParametrs[1],
+                        Birthdate = studentParametrs[5],
+                        Email = studentParametrs[6],
+                        MothersName = studentParametrs[7],
+                        FathersName = studentParametrs[8],
+                        Studies = studies
+                    };
+                    
+                    /*
+                    st.Ska(studentParametrs[4]);
                     st.setFname(studentParametrs[0]);
                     st.setLname(studentParametrs[1]);
                     st.setBirthdate(studentParametrs[5]);
@@ -64,7 +81,7 @@ namespace Cw2
                                                studentParametrs[3]
                                                )
                     );
-
+                    */
                     //,
                     //                        studentParametrs[7],
                     //                        studentParametrs[8]
