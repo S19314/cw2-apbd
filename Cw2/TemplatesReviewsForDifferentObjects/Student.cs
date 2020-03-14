@@ -7,7 +7,7 @@ using Cw2.TemplatesReviewsForDifferentObjects;
 public class Student
 {
 	//[XML ...]
-	[XmlElement(ElementName = "student")]
+	// [XmlElement(ElementName = "student")]
 	private string ska,
 				   fname,
 					lname,
@@ -131,7 +131,25 @@ public class Student
 			studies = value;
 		} 
 	}
-	
+
+
+
+	public override bool Equals(Object obj)
+	{
+		//Check for null and compare run-time types.
+		if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+		{
+			return false;
+		}
+		else
+		{
+			Student student = (Student)obj;
+			return (ska == student.ska) &&
+					(fname == student.fname) &&
+					(lname == student.lname);
+		}
+	}
+
 
 
 	/*

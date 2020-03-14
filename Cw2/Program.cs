@@ -30,7 +30,7 @@ namespace Cw2
             --_ */
             // formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2]; 
 
-            sourceFilePath = "D:/Uniwesity/4_semestr/APBD/pgago_FTP/Zajęcia 2/cwiczenia_notatki/Cw2/Cw2/Data/dane.csv";
+            sourceFilePath = @"D:\Projects\C#\APBD\Cwieczenie_2\Cw2\Data\dane.csv";
             
 
             // formatDanych = (args[2] == "json") ? args[2] :"xml";
@@ -51,33 +51,33 @@ namespace Cw2
                 {
                     string[] studentParametrs = line.Split(',');
 
+                        bool isMessageForLog = false;
                 string infoStudent = "";
                 for (int i = 0; i < studentParametrs.Length; i++)
-                    infoStudent += studentParametrs[i];
+                    infoStudent += " " + studentParametrs[i];
 
-
+                        
                         if (studentParametrs.Length < 9)
                     {
+
                         infoStudent = "Student: " + infoStudent + " ma " + studentParametrs.Length + " parametrów, " +
                             "a potrzebno mieć 9";
+                            logStreamWriter.Write(infoStudent + "\n");
+                            logStreamWriter.Flush();
+                            continue;
+
                     }
                     for(int  i = 0; i < studentParametrs.Length; i++)
                     {
                             if (studentParametrs[i] == null || studentParametrs[i] == "")
                             {
-                                infoStudent += "; Ma pusty parametry" 
+                                infoStudent += "; Ma pusty parametry";
+                                isMessageForLog = true;
                                 break;
                             }
                     }
 
-                    // ещё проверить на правильность пути
-
-                    if (infoStudent != "") {
-                        logStreamWriter.Write(infoStudent);
-                        logStreamWriter.Flush();
-                            continue;
-                    }
-
+                    
                         // Console.WriteLine("ska " + studentParametrs[4] + ", fname " + studentParametrs[0]);
                     var studies = new Studies {
                         Name = studentParametrs[2],
@@ -96,24 +96,42 @@ namespace Cw2
                         Studies = studies
                     };
 
-                    /*
-                    st.Ska(studentParametrs[4]);
-                    st.setFname(studentParametrs[0]);
-                    st.setLname(studentParametrs[1]);
-                    st.setBirthdate(studentParametrs[5]);
-                    st.setEmail(studentParametrs[6]);
-                    st.setMothersName(studentParametrs[7]);
-                    st.setFathersName(studentParametrs[8]);
-                    st.SetStudies( new Studies(
-                                               studentParametrs[2], 
-                                               studentParametrs[3]
-                                               )
-                    );
-                    */
-                    //,
-                    //                        studentParametrs[7],
-                    //                        studentParametrs[8]
+                        /*
+                        st.Ska(studentParametrs[4]);
+                        st.setFname(studentParametrs[0]);
+                        st.setLname(studentParametrs[1]);
+                        st.setBirthdate(studentParametrs[5]);
+                        st.setEmail(studentParametrs[6]);
+                        st.setMothersName(studentParametrs[7]);
+                        st.setFathersName(studentParametrs[8]);
+                        st.SetStudies( new Studies(
+                                                   studentParametrs[2], 
+                                                   studentParametrs[3]
+                                                   )
+                        );
+                        */
+                        //,
+                        //                        studentParametrs[7],
+                        //                        studentParametrs[8]
 
+
+                        // ещё проверить на правильность пути
+
+
+                    for(int i = 0; i < students.Count; i++)
+                    {
+                            if (students[i].Equals(st)) {
+                                infoStudent += " ; Takij student już istnieje w Baze Dannych";
+                                isMessageForLog = true; 
+                            }
+                    }
+
+                    if (isMessageForLog)
+                    {
+                        logStreamWriter.Write(infoStudent + "\n");
+                        logStreamWriter.Flush();
+                        continue;
+                    }
 
                     students.Add(st);
                     string courseName = studentParametrs[2];// students[students.Count-1].Studies.Name;
@@ -193,7 +211,9 @@ namespace Cw2
             // fileStream.Write(document);
             // C:\Users\admin\Desktop
             // fileStream.Close();
-            document.Save(aimFilePath);
+           // using (StreamWriter logStreamWriter = new StreamWriter("log.txt", false, System.Text.Encoding.Default))
+            
+                document.Save(aimFilePath);
         }
     }
 
