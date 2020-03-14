@@ -23,21 +23,11 @@ namespace Cw2
                     defaultTypDanych = "xml";
             string sourceFilePath,
                     aimFilePath;
-            /*_--
-            string sourceFilePath = ((args[0] == null) || (args[0] == "")) ? defaultAdresPlikuCSV : args[0],
-                aimFilePath = ((args[1] == null) || (args[1] == "")) ? defaultAdresDocelowyWyniku : args[1];
-            --_ */
-            // formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2]; 
 
-            sourceFilePath = @"D:\Projects\C#\APBD\Cwieczenie_2\Cw2\Data\dane.csv";
-            aimFilePath = "C:/Users/admin/Desktop/Cw2_CS/result.xml";
-
-
-            // formatDanych = (args[2] == "json") ? args[2] :"xml";
-
-            // _--_ var workSheetTemplate = FactoryWriter.createWriter(args[2]);
-
-            //            ICollection<Student> 
+            sourceFilePath = ((args[0] == null) || (args[0] == "")) ? defaultAdresPlikuCSV : args[0];
+            aimFilePath = ((args[1] == null) || (args[1] == "")) ? defaultAdresDocelowyWyniku : args[1];
+            string formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2]; 
+            
             var students = new List<Student>();
             
             Dictionary<string, int> hashCourses = new Dictionary<string, int>();
@@ -135,51 +125,9 @@ namespace Cw2
                 
             }
 
-
-            
-            XElement[] xmlStudents = new XElement[students.Count];
-            for (int i = 0; i < students.Count; i++) {
-                xmlStudents[i] = new XElement("student",
-                                              new XAttribute("indexNumber", "s"+students[i].Ska),
-                                              new XElement("fname", students[i].Fname),
-                                              new XElement("lname", students[i].Lname),
-                                              new XElement("birthdate", students[i].Birthdate),
-                                              new XElement("email", students[i].Email),
-                                              new XElement("mothersName", students[i].MothersName),
-                                              new XElement("fathersName", students[i].FathersName),
-                                              new XElement("studies",
-                                                           new XElement("name", students[i].Studies.Name),
-                                                           new XElement("mode", students[i].Studies.Mode)
-                                              )
-                );
-
-                
-            }
-            XElement[] xmlActiveStudies = new XElement[hashCourses.Count];
-            int indexXmlActiveStudies = 0;
-            foreach (KeyValuePair<string, int> keyValue in hashCourses) {
-                Console.WriteLine("Key " + keyValue.Key + ", value " + keyValue.Value);
-                xmlActiveStudies[indexXmlActiveStudies] = new XElement(
-                    "studies",
-                    new XAttribute("name", keyValue.Key),
-                    new XAttribute("numberOfStudents", keyValue.Value)
-                    );
-                indexXmlActiveStudies++;
-            }
-
-
-            XDocument document = new XDocument( 
-                new XElement("uczelnia", 
-                    new XAttribute("createdAt", DateTime.Now),
-                    new XAttribute("author", "Vladyslav Domariev"),
-                        new XElement("studenci", xmlStudents),
-                    new XElement("activeStudies",
-                    xmlActiveStudies
-                                 )
-                ) 
-            );
-
-            document.Save(aimFilePath);
+            var myWriter = FactoryWriter.createWriter(defaultTypDanych);
+            myWriter.WriteDataIntoFile(students, hashCourses, aimFilePath);
+            Console.WriteLine("Program finshed!");
         }
     }
 

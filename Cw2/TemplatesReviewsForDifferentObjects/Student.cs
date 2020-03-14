@@ -11,21 +11,22 @@ public class Student
 					email,
 					mothersName,
 					fathersName;
-	
+
 	private Studies studies;
-	
+
 
 	public Student()
-	{}
-	
+	{ }
+
 
 
 
 	public string Ska
 	{
-		get{ return ska; }
+		get { return ska; }
 
-		set{
+		set
+		{
 			this.ska = value;
 		}
 	}
@@ -43,8 +44,9 @@ public class Student
 	public string Lname
 	{
 		get { return lname; }
-		
-		set{
+
+		set
+		{
 			this.lname = value;
 		}
 	}
@@ -52,9 +54,10 @@ public class Student
 
 	public string Birthdate
 	{
-		get{ return birthdate; }
-	
-		set {
+		get { return birthdate; }
+
+		set
+		{
 			this.birthdate = value;
 		}
 	}
@@ -62,9 +65,10 @@ public class Student
 
 	public string Email
 	{
-		get{ return lname; }
+		get { return lname; }
 
-		set{
+		set
+		{
 			this.email = value;
 		}
 	}
@@ -74,26 +78,31 @@ public class Student
 		{
 			return mothersName;
 		}
-	
+
 		set
-		{ 
+		{
 			this.mothersName = value;
 		}
-}
+	}
 	public string FathersName
-		{	get{
+	{
+		get
+		{
 			return fathersName;
 		}
-		set {
-			fathersName  = value;
+		set
+		{
+			fathersName = value;
 		}
 	}
-	public Studies Studies {
+	public Studies Studies
+	{
 		get { return studies; }
 
-		set{
+		set
+		{
 			studies = value;
-		} 
+		}
 	}
 
 
@@ -113,3 +122,4 @@ public class Student
 					(lname == student.lname);
 		}
 	}
+}
