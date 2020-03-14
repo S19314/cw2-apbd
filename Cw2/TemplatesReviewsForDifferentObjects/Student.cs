@@ -2,12 +2,8 @@
 using System.Xml.Serialization;
 using Cw2.TemplatesReviewsForDifferentObjects;
 [Serializable]
-//[XmlSerializable]
-// [XmlRoot(ElementName = "student")]
 public class Student
 {
-	//[XML ...]
-	// [XmlElement(ElementName = "student")]
 	private string ska,
 				   fname,
 					lname,
@@ -15,27 +11,12 @@ public class Student
 					email,
 					mothersName,
 					fathersName;
-	// [XmlAttribute(ska = "indexNumber")]
-	//studies 
+	
 	private Studies studies;
 	
 
-	// [XmlElement(Imie = "")]
-	public Student() // -- string ska, string fname ) //--_ , string lname, string birthdate, string email, string mothersName, string fathersName, Studies studies)
-	{
-		// if(paramm == null OR "" ) throw new MyException();
-		// -- this.ska = ska;
-		// -- this.fname = fname;
-		/*
-		this.lname = lname;
-		this.birthdate = birthdate;
-		this.email = email;
-		this.mothersName = mothersName;
-		this.fathersName = fathersName; //
-										// StudentException (Недостаточно парраметров или неверные параметры)
-		this.studies = studies;
-	--_ */
-	}
+	public Student()
+	{}
 	
 
 
@@ -45,8 +26,6 @@ public class Student
 		get{ return ska; }
 
 		set{
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
 			this.ska = value;
 		}
 	}
@@ -58,9 +37,6 @@ public class Student
 
 		set
 		{
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
-
 			this.fname = value;
 		}
 	}
@@ -69,9 +45,6 @@ public class Student
 		get { return lname; }
 		
 		set{
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
-
 			this.lname = value;
 		}
 	}
@@ -82,8 +55,6 @@ public class Student
 		get{ return birthdate; }
 	
 		set {
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
 			this.birthdate = value;
 		}
 	}
@@ -94,9 +65,6 @@ public class Student
 		get{ return lname; }
 
 		set{
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
-
 			this.email = value;
 		}
 	}
@@ -108,9 +76,7 @@ public class Student
 		}
 	
 		set
-		{
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
+		{ 
 			this.mothersName = value;
 		}
 }
@@ -119,8 +85,6 @@ public class Student
 			return fathersName;
 		}
 		set {
-			if (value == null || value == "")
-				Console.WriteLine("Excp");
 			fathersName  = value;
 		}
 	}
@@ -149,15 +113,3 @@ public class Student
 					(lname == student.lname);
 		}
 	}
-
-
-
-	/*
-	public string Fname(){ 
-		get{ return fname; }
-		set{ this.fname = fname; }
-	}
-	*/
-	// public string Lname(){ get; set;	}
-
-}

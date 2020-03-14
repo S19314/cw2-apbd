@@ -12,13 +12,12 @@ namespace Cw2
     class Program
     {
         static void Main(string[] args)
-        {//  Вынести запись аж сюда запись ошибок или нет
-            ///*
-             if(args.Length > 3) {
-                Console.WriteLine("Nie może być więcej niź 3 parametry" );
-                 return;
-             }
-            //*/
+        {
+            if (args.Length > 3)
+            {
+                Console.WriteLine("Nie może być więcej niź 3 parametry");
+                return;
+            }
             string defaultAdresPlikuCSV = "data.csv",
                     defaultAdresDocelowyWyniku = "result.xml",
                     defaultTypDanych = "xml";
@@ -40,16 +39,11 @@ namespace Cw2
 
             //            ICollection<Student> 
             var students = new List<Student>();
-            //               ICollection 
-            //IList students =
-
+            
             Dictionary<string, int> hashCourses = new Dictionary<string, int>();
-            //using (FileStream logFileStream = new FileStream("log.txt", FileMode.Create) ){
             using (StreamWriter logStreamWriter = new StreamWriter("log.txt", false, System.Text.Encoding.Default)) {
                 try
                 {
-
-
                     using (var stream = new StreamReader(new FileInfo(sourceFilePath).OpenRead()))
                     {
                         string line = null;
@@ -64,7 +58,6 @@ namespace Cw2
 
                             if (studentParametrs.Length < 9)
                             {
-
                                 infoStudent = "Student: " + infoStudent + " ma " + studentParametrs.Length + " parametrów, " +
                                     "a potrzebno mieć 9";
                                 logStreamWriter.Write(infoStudent + "\n");
@@ -81,9 +74,6 @@ namespace Cw2
                                     break;
                                 }
                             }
-
-
-                            // Console.WriteLine("ska " + studentParametrs[4] + ", fname " + studentParametrs[0]);
                             var studies = new Studies
                             {
                                 Name = studentParametrs[2],
@@ -101,27 +91,6 @@ namespace Cw2
                                 FathersName = studentParametrs[8],
                                 Studies = studies
                             };
-
-                            /*
-                            st.Ska(studentParametrs[4]);
-                            st.setFname(studentParametrs[0]);
-                            st.setLname(studentParametrs[1]);
-                            st.setBirthdate(studentParametrs[5]);
-                            st.setEmail(studentParametrs[6]);
-                            st.setMothersName(studentParametrs[7]);
-                            st.setFathersName(studentParametrs[8]);
-                            st.SetStudies( new Studies(
-                                                       studentParametrs[2], 
-                                                       studentParametrs[3]
-                                                       )
-                            );
-                            */
-                            //,
-                            //                        studentParametrs[7],
-                            //                        studentParametrs[8]
-
-
-                            // ещё проверить на правильность пути
 
 
                             for (int i = 0; i < students.Count; i++)
@@ -141,7 +110,7 @@ namespace Cw2
                             }
 
                             students.Add(st);
-                            string courseName = studentParametrs[2];// students[students.Count-1].Studies.Name;
+                            string courseName = studentParametrs[2];
                             if (hashCourses.ContainsKey(courseName))
                             {
                                 hashCourses[courseName]++;
@@ -166,9 +135,6 @@ namespace Cw2
                 
             }
 
-            
-            // Закинуть в реализацию интерфейса IWrite
-
 
             
             XElement[] xmlStudents = new XElement[students.Count];
@@ -188,7 +154,6 @@ namespace Cw2
                 );
 
                 
-                // new XAttribute();
             }
             XElement[] xmlActiveStudies = new XElement[hashCourses.Count];
             int indexXmlActiveStudies = 0;
@@ -203,8 +168,6 @@ namespace Cw2
             }
 
 
-            // В коммите написать, что пошёл другим путём, так как незватало подсчёта значений
-            //  Спросить у преподователя, как лучше делать
             XDocument document = new XDocument( 
                 new XElement("uczelnia", 
                     new XAttribute("createdAt", DateTime.Now),
@@ -212,27 +175,11 @@ namespace Cw2
                         new XElement("studenci", xmlStudents),
                     new XElement("activeStudies",
                     xmlActiveStudies
-// Уникальный список с количеством студентов                    // new XElement("studies")
                                  )
-                ) // ActiveStudies
+                ) 
             );
 
-
-
-            /*
-            XElement xmlUczelnia = new XElement("uczelnia");
-            document.Add(xmlUczelnia);
-
-            XElement xmlStudent = new XElement("student", new Attribute("indexNumber", "s"+));
-            */
-            // xmlStudent.ToString()?
-            // FileStream fileStream = new FileStream(aimFilePath, FileMode.Create);
-            // fileStream.Write(document);
-            // C:\Users\admin\Desktop
-            // fileStream.Close();
-           // using (StreamWriter logStreamWriter = new StreamWriter("log.txt", false, System.Text.Encoding.Default))
-            
-                document.Save(aimFilePath);
+            document.Save(aimFilePath);
         }
     }
 

@@ -9,15 +9,10 @@ namespace Cw2.TemplatesReviewsForDifferentObjects
     {
         private string name,
                        mode;
-        public Studies() { //_ string name, string mode){
-            //_ this.name = name;
-            //_ this.mode = mode;
-        }
+        public Studies() {}
 
         public string Name {
             set {
-                if (value == null || value == "")
-                    Console.WriteLine("Excp");
                 name = value;
             }
 
@@ -31,8 +26,6 @@ namespace Cw2.TemplatesReviewsForDifferentObjects
 
             set
             {
-                if (value == null || value == "")
-                    Console.WriteLine("Excp");
                 mode = value;
             }
             get

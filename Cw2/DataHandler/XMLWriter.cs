@@ -7,7 +7,7 @@ namespace Cw2.DataHandler
     public class XMLWriter //-- : IWriter
     {
         // Здесь скорей должен быть преобра-ователь, который возвращает результат в виде Стринга
-        public virtual void WriteDataIntoFile(ICollection<Student> students)
+        public virtual void WriteDataIntoFile(List<Student> students)
         { 
         
         }
