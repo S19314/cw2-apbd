@@ -26,8 +26,15 @@ namespace Cw2
 
             sourceFilePath = ((args[0] == null) || (args[0] == "")) ? defaultAdresPlikuCSV : args[0];
             aimFilePath = ((args[1] == null) || (args[1] == "")) ? defaultAdresDocelowyWyniku : args[1];
-            string formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2]; 
-            
+            string formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2];
+
+            Console.WriteLine("args[0] " + args[0] +
+                               "args[1] " + args[1] +
+                               "args[2] " + args[2] + 
+                               "\n sourceFilePath " + sourceFilePath +
+                               "aimFile " + aimFilePath + 
+                               "formatDanych " + formatDanych);
+
             var students = new List<Student>();
             
             Dictionary<string, int> hashCourses = new Dictionary<string, int>();
@@ -125,7 +132,7 @@ namespace Cw2
                 
             }
 
-            var myWriter = FactoryWriter.createWriter(defaultTypDanych);
+            var myWriter = FactoryWriter.createWriter(formatDanych);
             myWriter.WriteDataIntoFile(students, hashCourses, aimFilePath);
             Console.WriteLine("Program finshed!");
         }
