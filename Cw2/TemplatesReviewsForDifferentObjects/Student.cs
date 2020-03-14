@@ -7,7 +7,7 @@ using Cw2.TemplatesReviewsForDifferentObjects;
 public class Student
 {
 	//[XML ...]
-	
+	[XmlElement(ElementName = "student")]
 	private string ska,
 				   fname,
 					lname,

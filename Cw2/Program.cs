@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
-
+using System.Xml.Linq;
 
 namespace Cw2
 {
@@ -13,20 +13,22 @@ namespace Cw2
     {
         static void Main(string[] args)
         {//  Вынести запись аж сюда запись ошибок или нет
-            /*
-             if(args.lenght > 3) {
-                 Write.console("Nie może być więcej niź 3 parametry" );
+            ///*
+             if(args.Length > 3) {
+                Console.WriteLine("Nie może być więcej niź 3 parametry" );
                  return;
              }
-            */
-
+            //*/
+            string defaultAdresPlikuCSV = "data.csv",
+                    defaultAdresDocelowyWyniku = "result.xml",
+                    defaultTypDanych = "xml";
             string sourceFilePath,
                     aimFilePath;
             /*_--
-            string sourceFilePath = ((args[0] == null) || (args[0] == "")) ? "data.csv" : args[0],
-                aimFilePath = ((args[1] == null) || (args[1] == "")) ? "result.xml" : args[1];
+            string sourceFilePath = ((args[0] == null) || (args[0] == "")) ? defaultAdresPlikuCSV : args[0],
+                aimFilePath = ((args[1] == null) || (args[1] == "")) ? defaultAdresDocelowyWyniku : args[1];
             --_ */
-            // formatDanych = ((args[2] == null) ||  (args[2] == "")) ? "xml" : args[2]; 
+            // formatDanych = ((args[2] == null) ||  (args[2] == "")) ? defaultTypDanych : args[2]; 
 
             sourceFilePath = "D:/Uniwesity/4_semestr/APBD/pgago_FTP/Zajęcia 2/cwiczenia_notatki/Cw2/Cw2/Data/dane.csv";
             
@@ -38,24 +40,50 @@ namespace Cw2
             //            ICollection<Student> 
              var students = new List<Student>();
             //               ICollection 
-            //IList students = 
+            //IList students =
 
-
+            Dictionary<string, int> hashCourses = new Dictionary<string, int>();
+            //using (FileStream logFileStream = new FileStream("log.txt", FileMode.Create) ){
+            using (StreamWriter logStreamWriter = new StreamWriter("log.txt", false, System.Text.Encoding.Default)) { 
             using (var stream = new StreamReader(new FileInfo(sourceFilePath).OpenRead())) {
                 string line = null;
                 while ((line = stream.ReadLine()) != null)
                 {
                     string[] studentParametrs = line.Split(',');
-                    // Piotr Gago
-                    // Najlepej zrobić jako parametr jeden objekt Studies?
-                    // albo dwa parametry typu string?
-                    // Albo nie ma różnicy w tym wypadku? 
-                    Console.WriteLine("ska " + studentParametrs[4] + ", fname " + studentParametrs[0]);
-                    var studies = new Studies { 
+
+                string infoStudent = "";
+                for (int i = 0; i < studentParametrs.Length; i++)
+                    infoStudent += studentParametrs[i];
+
+
+                        if (studentParametrs.Length < 9)
+                    {
+                        infoStudent = "Student: " + infoStudent + " ma " + studentParametrs.Length + " parametrów, " +
+                            "a potrzebno mieć 9";
+                    }
+                    for(int  i = 0; i < studentParametrs.Length; i++)
+                    {
+                            if (studentParametrs[i] == null || studentParametrs[i] == "")
+                            {
+                                infoStudent += "; Ma pusty parametry" 
+                                break;
+                            }
+                    }
+
+                    // ещё проверить на правильность пути
+
+                    if (infoStudent != "") {
+                        logStreamWriter.Write(infoStudent);
+                        logStreamWriter.Flush();
+                            continue;
+                    }
+
+                        // Console.WriteLine("ska " + studentParametrs[4] + ", fname " + studentParametrs[0]);
+                    var studies = new Studies {
                         Name = studentParametrs[2],
                         Mode = studentParametrs[3]
                     };
-                   
+
                     var st = new Student
                     {
                         Ska = studentParametrs[4],
@@ -67,7 +95,7 @@ namespace Cw2
                         FathersName = studentParametrs[8],
                         Studies = studies
                     };
-                    
+
                     /*
                     st.Ska(studentParametrs[4]);
                     st.setFname(studentParametrs[0]);
@@ -87,24 +115,85 @@ namespace Cw2
                     //                        studentParametrs[8]
 
 
-                    students.Add(st);        
+                    students.Add(st);
+                    string courseName = studentParametrs[2];// students[students.Count-1].Studies.Name;
+                    if (hashCourses.ContainsKey(courseName))
+                    {
+                        hashCourses[courseName]++;
+                    }
+                    else
+                    {
+                        hashCourses.Add(courseName, 1);
+                    }
                 }
             }
 
-
+            }
             aimFilePath = "C:/Users/admin/Desktop/Cw2_CS/result.xml";
             // Закинуть в реализацию интерфейса IWrite
 
 
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Student>),
-                                      new XmlRootAttribute("uczelnia"));
-
-            Stream fileStream = new FileStream(aimFilePath, FileMode.Create);
-            serializer.Serialize(fileStream, students);
-            // C:\Users\admin\Desktop
-            fileStream.Close();
             
+            XElement[] xmlStudents = new XElement[students.Count];
+            for (int i = 0; i < students.Count; i++) {
+                xmlStudents[i] = new XElement("student",
+                                              new XAttribute("indexNumber", "s"+students[i].Ska),
+                                              new XElement("fname", students[i].Fname),
+                                              new XElement("lname", students[i].Lname),
+                                              new XElement("birthdate", students[i].Birthdate),
+                                              new XElement("email", students[i].Email),
+                                              new XElement("mothersName", students[i].MothersName),
+                                              new XElement("fathersName", students[i].FathersName),
+                                              new XElement("studies",
+                                                           new XElement("name", students[i].Studies.Name),
+                                                           new XElement("mode", students[i].Studies.Mode)
+                                              )
+                );
+
+                
+                // new XAttribute();
+            }
+            XElement[] xmlActiveStudies = new XElement[hashCourses.Count];
+            int indexXmlActiveStudies = 0;
+            foreach (KeyValuePair<string, int> keyValue in hashCourses) {
+                Console.WriteLine("Key " + keyValue.Key + ", value " + keyValue.Value);
+                xmlActiveStudies[indexXmlActiveStudies] = new XElement(
+                    "studies",
+                    new XAttribute("name", keyValue.Key),
+                    new XAttribute("numberOfStudents", keyValue.Value)
+                    );
+                indexXmlActiveStudies++;
+            }
+
+
+            // В коммите написать, что пошёл другим путём, так как незватало подсчёта значений
+            //  Спросить у преподователя, как лучше делать
+            XDocument document = new XDocument( 
+                new XElement("uczelnia", 
+                    new XAttribute("createdAt", DateTime.Now),
+                    new XAttribute("author", "Vladyslav Domariev"),
+                        new XElement("studenci", xmlStudents),
+                    new XElement("activeStudies",
+                    xmlActiveStudies
+// Уникальный список с количеством студентов                    // new XElement("studies")
+                                 )
+                ) // ActiveStudies
+            );
+
+
+
+            /*
+            XElement xmlUczelnia = new XElement("uczelnia");
+            document.Add(xmlUczelnia);
+
+            XElement xmlStudent = new XElement("student", new Attribute("indexNumber", "s"+));
+            */
+            // xmlStudent.ToString()?
+            // FileStream fileStream = new FileStream(aimFilePath, FileMode.Create);
+            // fileStream.Write(document);
+            // C:\Users\admin\Desktop
+            // fileStream.Close();
+            document.Save(aimFilePath);
         }
     }
 
